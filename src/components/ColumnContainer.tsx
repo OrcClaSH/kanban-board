@@ -1,17 +1,25 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { TrashIcon } from "../icons/TrashIcon";
-import { Column, Id } from "../types";
+import { Column, Id, Task } from "../types";
 import { useState } from "react";
+import { PlusIcon } from "../icons/PlusIcon";
+import { TaskCard } from "./TaskCard";
 
 export function ColumnContainer({
   item,
   deleteColumn,
   updateColumn,
+  createTask,
+  deleteTask,
+  tasks,
 }: {
   item: Column;
+  tasks: Task[];
   deleteColumn: (id: Id) => void;
   updateColumn: (id: Id, title: string) => void;
+  createTask: (columnId: Id) => void;
+  deleteTask: (taskId: Id) => void;
 }) {
   const [editMode, setEditMode] = useState(false);
 
@@ -149,11 +157,26 @@ export function ColumnContainer({
         className="
       flex
       flex-grow
+      flex-col
+      gap-4
+      p-2
+      overflow-x-hidden
+      overflow-y-auto
       "
       >
-        Content
+        {tasks.map((task) => (
+          <TaskCard key={task.id} task={task} deleteTask={deleteTask} />
+        ))}
       </div>
-      <div className="">Footer</div>
+      <button
+        className="flex gap-2 items-center border-columnBackgroundColor border-2 rounded-md p-4 border-x-columnBackgroundColor hover:bg-mainBackgroundColor hover:text-rose-500 active:bg-black"
+        onClick={() => {
+          createTask(item.id);
+        }}
+      >
+        <PlusIcon />
+        Add task
+      </button>
     </div>
   );
 }
