@@ -1,8 +1,8 @@
-import { useSortable } from "@dnd-kit/sortable";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { TrashIcon } from "../icons/TrashIcon";
 import { Column, Id, Task } from "../types";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { PlusIcon } from "../icons/PlusIcon";
 import { TaskCard } from "./TaskCard";
 
@@ -12,6 +12,7 @@ export function ColumnContainer({
   updateColumn,
   createTask,
   deleteTask,
+  updateTask,
   tasks,
 }: {
   item: Column;
@@ -20,8 +21,12 @@ export function ColumnContainer({
   updateColumn: (id: Id, title: string) => void;
   createTask: (columnId: Id) => void;
   deleteTask: (taskId: Id) => void;
+  updateTask: (id: Id, content: string) => void;
 }) {
   const [editMode, setEditMode] = useState(false);
+  const tasksIds = useMemo(() => {
+    return tasks.map((task) => task.id);
+  }, [tasks]);
 
   const {
     setNodeRef,
@@ -164,9 +169,16 @@ export function ColumnContainer({
       overflow-y-auto
       "
       >
-        {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} deleteTask={deleteTask} />
-        ))}
+        <SortableContext items={tasksIds}>
+          {tasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              deleteTask={deleteTask}
+              updateTask={updateTask}
+            />
+          ))}
+        </SortableContext>
       </div>
       <button
         className="flex gap-2 items-center border-columnBackgroundColor border-2 rounded-md p-4 border-x-columnBackgroundColor hover:bg-mainBackgroundColor hover:text-rose-500 active:bg-black"
