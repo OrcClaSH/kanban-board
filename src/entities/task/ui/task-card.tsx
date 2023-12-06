@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { TrashIcon } from "../icons/TrashIcon";
-import { Id, Task } from "../types";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { useState } from 'react';
+
+import { Id, Task } from '@shared/types';
+import { TrashIcon } from '@shared/ui';
 
 export function TaskCard({
   task,
@@ -16,21 +20,15 @@ export function TaskCard({
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const {
-    setNodeRef,
-    attributes,
-    listeners,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: task.id,
-    data: {
-      type: "Task",
-      task,
-    },
-    disabled: editMode,
-  });
+  const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
+    useSortable({
+      id: task.id,
+      data: {
+        type: 'Task',
+        task,
+      },
+      disabled: editMode,
+    });
 
   const style = {
     transition,
@@ -64,16 +62,15 @@ export function TaskCard({
         <textarea
           className="h-[90%] w-full resize-none border-none rounded bg-transparent text-white focus:outline-none"
           value={task.content}
-          autoFocus
           placeholder="Task content"
           onBlur={toggleEditMode}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
+            if (e.key === 'Enter' && !e.shiftKey) {
               toggleEditMode();
             }
           }}
           onChange={(e) => updateTask(task.id, e.target.value)}
-        ></textarea>
+        />
       </div>
     );
   }
@@ -98,6 +95,7 @@ export function TaskCard({
           onClick={() => {
             deleteTask(task.id);
           }}
+          type="button"
         >
           <TrashIcon />
         </button>

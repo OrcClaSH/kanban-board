@@ -1,10 +1,14 @@
-import { SortableContext, useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { TrashIcon } from "../icons/TrashIcon";
-import { Column, Id, Task } from "../types";
-import { useMemo, useState } from "react";
-import { PlusIcon } from "../icons/PlusIcon";
-import { TaskCard } from "./TaskCard";
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { SortableContext, useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { useMemo, useState } from 'react';
+
+import { Column, Id, Task } from '@shared/types';
+import { PlusIcon, TrashIcon } from '@shared/ui';
+
+import { TaskCard } from '../../task/ui/task-card';
 
 export function ColumnContainer({
   item,
@@ -28,21 +32,15 @@ export function ColumnContainer({
     return tasks.map((task) => task.id);
   }, [tasks]);
 
-  const {
-    setNodeRef,
-    attributes,
-    listeners,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: item.id,
-    data: {
-      type: "Column",
-      item,
-    },
-    disabled: editMode,
-  });
+  const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
+    useSortable({
+      id: item.id,
+      data: {
+        type: 'Column',
+        item,
+      },
+      disabled: editMode,
+    });
 
   const style = {
     transition,
@@ -66,7 +64,7 @@ export function ColumnContainer({
       border-2
       border-rose-500
     "
-      ></div>
+      />
     );
   }
 
@@ -132,12 +130,11 @@ export function ColumnContainer({
               className="bg-black focus:border-rose-500 border rounded outline-none px-2"
               value={item.title}
               onChange={(e) => updateColumn(item.id, e.target.value)}
-              autoFocus
               onBlur={() => {
                 setEditMode(false);
               }}
               onKeyDown={(e) => {
-                if (e.key !== "Enter") return;
+                if (e.key !== 'Enter') return;
                 setEditMode(false);
               }}
             />
@@ -153,6 +150,7 @@ export function ColumnContainer({
         py-2
         "
           onClick={() => deleteColumn(item.id)}
+          type="button"
         >
           <TrashIcon />
         </button>
@@ -185,6 +183,7 @@ export function ColumnContainer({
         onClick={() => {
           createTask(item.id);
         }}
+        type="button"
       >
         <PlusIcon />
         Add task
