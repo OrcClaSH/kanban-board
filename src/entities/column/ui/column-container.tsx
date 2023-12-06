@@ -122,7 +122,7 @@ export function ColumnContainer({
       rounded-full
         "
           >
-            0
+            {tasks.length}
           </div>
           {!editMode && item.title}
           {editMode && (
