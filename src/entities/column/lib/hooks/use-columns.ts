@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react';
 
+import { ColumnsDefaultData } from '@shared/config/config';
 import { generateId } from '@shared/lib/generate-id';
 import { Column, Id } from '@shared/types';
 
 import { useTasks } from '../../../task/lib/hooks/use-tasks';
 
 export function useColumns() {
-  const [columns, setColumns] = useState<Column[]>([]);
+  const [columns, setColumns] = useState<Column[]>(ColumnsDefaultData);
   const columnsId = useMemo(() => columns.map((item) => item.id), [columns]);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 

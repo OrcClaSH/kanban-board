@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
+import { TasksDefaultData } from '@shared/config/config';
 import { generateId } from '@shared/lib';
 import { Id, Task } from '@shared/types';
 
 export function useTasks() {
+  const [tasks, setTasks] = useState<Task[]>(TasksDefaultData);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
-  const [tasks, setTasks] = useState<Task[]>([]);
 
   function createTask(columnId: Id) {
     const newTask: Task = {
