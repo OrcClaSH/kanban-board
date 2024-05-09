@@ -1,5 +1,9 @@
 # React + TypeScript + Vite
 
+[DEMO](https://kanban-board-cl.vercel.app)
+
+![изображение](https://github.com/OrcClaSH/kanban-board/assets/48704701/80fd256c-3036-4d9c-bad3-a8c16bc78c44)
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
